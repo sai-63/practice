@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       body: Container(
+        color: Colors.blue,
         decoration: BoxDecoration(
           color: Colors.grey[300]
         ),
