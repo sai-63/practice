@@ -2,32 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:practice/pages/chat-page.dart';
 import 'package:practice/reusable_widgets.dart';
 import 'package:practice/pages/syllabus-page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  String email;
+  Home({required this.email});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home> createState() => _HomeState(email: email);
 }
 
 class _HomeState extends State<Home> {
+  String email;
+  _HomeState({required this.email});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
         title: const Text(
           'Eduflex',
           style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.black
+              ),
+                child: Column(
+                  children: [
+                    Text(email.replaceAll("@gmail.com", ""),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white),),
+                  ],
+                )
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 30.0),
+              title: Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
+              onTap: (){Navigator.pop(context);},
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.only(left: 30.0),
+              title: Text('LogOut',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
+              onTap: (){Navigator.pushReplacementNamed(context, '/');},
+            )
+          ],
+        ),
+      ),
       body: Container(
-        color: Colors.blue,
         decoration: BoxDecoration(
           color: Colors.grey[300]
         ),
@@ -54,7 +80,7 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen()));}),
+                box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>chatpage(email: email)));}),
                 const SizedBox(
                   width: 35.0,
                 ),

@@ -11,10 +11,8 @@ void main() async {
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context)=> LoginScreen(),
+      '/': (context)=> Homes(),
       '/signup': (context)=> SignUp(),
-      '/home': (context)=> Home(),
-      '/chat': (context)=> ChatScreen(),
     },
   ));
 }

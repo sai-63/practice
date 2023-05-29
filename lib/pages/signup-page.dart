@@ -33,7 +33,7 @@ class _SignUpState extends State<SignUp> {
             reUsableTextField("Enter Password", Icons.person, true, _passwordTextController),
             SizedBox(height: 40.0,),
             loginSignUpButton(context, false, (){
-              FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextController.text, password: _passwordTextController.text).then((value){Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginScreen()));}).onError((error, stackTrace){});
+              FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextController.text, password: _passwordTextController.text).then((value){Navigator.push(context,MaterialPageRoute(builder: (context)=>Homes()));}).onError((error, stackTrace){});
             } )
           ],
         ),
