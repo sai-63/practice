@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice/pages/chat-page.dart';
 import 'package:practice/reusable_widgets.dart';
 import 'package:practice/pages/syllabus-page.dart';
-import 'package:practice/pages/materials.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   String email;
@@ -85,7 +84,7 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   width: 35.0,
                 ),
-                box('Study Materials', Icons.menu_book,(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> StudyMaterials()));}),
+                box('Study Materials', Icons.menu_book,(){}),
                 const SizedBox(width: 35.0,),
                 box('YouTube', Icons.play_circle_fill_rounded,(){})
               ],
