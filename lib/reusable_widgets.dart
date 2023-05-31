@@ -81,3 +81,12 @@ Container syllabus(String text,Function onTap){
     ),
   );
 }
+Container material(String text,Function onTap)
+{
+  return Container(
+    color: Colors.green[400],
+    width: 300.0,
+    child: TextButton(onPressed: (){onTap();},
+    child: Text(text,style: TextStyle(color:Colors.amber,fontSize: 14.0,fontWeight: FontWeight.bold),),)
+  );
+}
