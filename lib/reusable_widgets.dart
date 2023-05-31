@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 TextField reUsableTextField(String text,IconData icon,bool type,TextEditingController controller){
   return TextField(
@@ -78,6 +79,30 @@ Container syllabus(String text,Function onTap){
     child: TextButton(
       onPressed: (){onTap();},
       child: Text(text,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),),
+    ),
+  );
+}
+
+Container YoutubeLinks(String text,String url,IconData icon){
+
+  return Container(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        IconButton(onPressed: () async{
+          await launchUrl(Uri.parse(url));
+        },
+            icon:Icon(icon,size: 50,)),
+        SizedBox(height: 10.0,),
+        Text(
+          text,
+          style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+      ],
     ),
   );
 }

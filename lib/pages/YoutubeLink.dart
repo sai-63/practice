@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:practice/reusable_widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'dart:async';
 
 class YoutubeLink extends StatefulWidget {
   const YoutubeLink({Key? key}) : super(key: key);

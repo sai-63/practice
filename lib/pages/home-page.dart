@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:practice/pages/chat-page.dart';
+import 'package:flutterfire_ui/auth.dart';
+import 'package:practice/pages/chat-type.dart';
 import 'package:practice/reusable_widgets.dart';
 import 'package:practice/pages/syllabus-page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:practice/pages/YoutubeLink.dart';
 
 class Home extends StatefulWidget {
   String email;
@@ -36,17 +37,40 @@ class _HomeState extends State<Home> {
               ),
                 child: Column(
                   children: [
-                    Text(email.replaceAll("@gmail.com", ""),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white),),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          child: Icon(Icons.person),
+                          radius: 20.0,
+                        ),
+                        SizedBox(width: 10.0,),
+                        Text('Welcome, ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white)),
+                        Text(email.replaceAll("@gmail.com", ""),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white),),
+                        // Text('Welcome, ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white)),
+                      ],
+                    ),
+                    SizedBox(height: 70.0,),
+                    Row(
+                      children: [
+                        Icon(Icons.mail_rounded,color: Colors.grey,),
+                        SizedBox(width: 5.0,),
+                        Text(':-',style: TextStyle(color: Colors.white),),
+                        SizedBox(width: 5.0,),
+                        Text(email,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.0,color: Colors.white)),
+                      ],
+                    ),
                   ],
                 )
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 30.0),
+              leading: Icon(Icons.person),
               title: Text('Profile',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
-              onTap: (){Navigator.pop(context);},
+              onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));},
             ),
             ListTile(
               contentPadding: EdgeInsets.only(left: 30.0),
+              leading: Icon(Icons.logout_sharp),
               title: Text('LogOut',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
               onTap: (){Navigator.pushReplacementNamed(context, '/');},
             )
@@ -80,13 +104,13 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>chatpage(email: email)));}),
+                box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Chatype(email: email)));}),
                 const SizedBox(
                   width: 35.0,
                 ),
                 box('Study Materials', Icons.menu_book,(){}),
                 const SizedBox(width: 35.0,),
-                box('YouTube', Icons.play_circle_fill_rounded,(){})
+                box('YouTube', Icons.play_circle_fill_rounded,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubeLink()));})
               ],
             ),
           ],
