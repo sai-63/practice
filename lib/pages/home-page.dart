@@ -4,6 +4,8 @@ import 'package:practice/pages/chat-type.dart';
 import 'package:practice/reusable_widgets.dart';
 import 'package:practice/pages/syllabus-page.dart';
 import 'package:practice/pages/YoutubeLink.dart';
+import 'package:practice/pages/dailyquiz.dart';
+import 'package:practice/pages/ai-chat.dart';
 
 class Home extends StatefulWidget {
   String email;
@@ -112,6 +114,17 @@ class _HomeState extends State<Home> {
                 const SizedBox(width: 35.0,),
                 box('YouTube', Icons.play_circle_fill_rounded,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubeLink()));})
               ],
+            ),
+            SizedBox(height: 70.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                box('Quiz', Icons.quiz_outlined,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Quiz()));}),
+                const SizedBox(
+                  width: 35.0,
+                ),
+                box('Ai-Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatGPTScreen()));}),
+                ],
             ),
           ],
         ),
