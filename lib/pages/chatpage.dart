@@ -44,16 +44,16 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 const Spacer(),
                 StreamBuilder(
-                  stream: firestore.collection('Users').doc(widget.id).snapshots(),
-                  builder: (context,AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-                    return !snapshot.hasData?Container(): Text(
-                      'Last seen : ' + DateFormat('hh:mm a').format(snapshot.data!['date_time'].toDate()),
-                      style: Styles.h1().copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white70),
-                    );
-                  }
+                    stream: firestore.collection('Users').doc(widget.id).snapshots(),
+                    builder: (context,AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+                      return !snapshot.hasData?Container(): Text(
+                        'Last seen : ' + DateFormat('hh:mm a').format(snapshot.data!['date_time'].toDate()),
+                        style: Styles.h1().copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white70),
+                      );
+                    }
                 ),
                 const Spacer(),
                 const SizedBox(
@@ -73,41 +73,41 @@ class _ChatPageState extends State<ChatPage> {
                         List<QueryDocumentSnapshot?> allData = snapshot
                             .data!.docs
                             .where((element) =>
-                                element['users'].contains(widget.id) &&
-                                element['users'].contains(
-                                    FirebaseAuth.instance.currentUser!.uid))
+                        element['users'].contains(widget.id) &&
+                            element['users'].contains(
+                                FirebaseAuth.instance.currentUser!.uid))
                             .toList();
                         QueryDocumentSnapshot? data =
-                            allData.isNotEmpty ? allData.first : null;
+                        allData.isNotEmpty ? allData.first : null;
                         if (data != null) {
                           roomId = data.id;
                         }
                         return data == null
                             ? Container()
                             : StreamBuilder(
-                                stream: data.reference
-                                    .collection('messages')
-                                    .orderBy('datetime', descending: true)
-                                    .snapshots(),
-                                builder: (context,
-                                    AsyncSnapshot<QuerySnapshot> snap) {
-                                  return !snap.hasData
-                                      ? Container()
-                                      : ListView.builder(
-                                          itemCount: snap.data!.docs.length,
-                                          reverse: true,
-                                          itemBuilder: (context, i) {
-                                            return ChatWidgets.messagesCard(
-                                                snap.data!.docs[i]['sent_by'] ==
-                                                    FirebaseAuth.instance.currentUser!.uid,
-                                                snap.data!.docs[i]['message'],
-                                                DateFormat('hh:mm a').format(
-                                                    snap.data!
-                                                        .docs[i]['datetime']
-                                                        .toDate()));
-                                          },
-                                        );
-                                });
+                            stream: data.reference
+                                .collection('messages')
+                                .orderBy('datetime', descending: true)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snap) {
+                              return !snap.hasData
+                                  ? Container()
+                                  : ListView.builder(
+                                itemCount: snap.data!.docs.length,
+                                reverse: true,
+                                itemBuilder: (context, i) {
+                                  return ChatWidgets.messagesCard(
+                                      snap.data!.docs[i]['sent_by'] ==
+                                          FirebaseAuth.instance.currentUser!.uid,
+                                      snap.data!.docs[i]['message'],
+                                      DateFormat('hh:mm a').format(
+                                          snap.data!
+                                              .docs[i]['datetime']
+                                              .toDate()));
+                                },
+                              );
+                            });
                       } else {
                         return Center(
                           child: Text(
