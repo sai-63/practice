@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice/pages/syllabus-page.dart';
 import 'package:practice/reusable_widgets.dart';
+import 'package:practice/pages/pdfs.dart';
 
 class Syllabus extends StatefulWidget {
   const Syllabus({Key? key}) : super(key: key);
@@ -25,21 +26,37 @@ class _SyllabusState extends State<Syllabus> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              syllabus("I'st Year,I'st Sem R19",(){}),
+              syllabus("I'st Year,I'st Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("I'st Year,II'nd Sem R19",(){}),
+              syllabus("I'st Year,II'nd Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("II'nd Year,I'st Sem R19",(){}),
+              syllabus("II'nd Year,I'st Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("II'nd Year,II'nd Sem R19",(){}),
+              syllabus("II'nd Year,II'nd Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("III'rd Year,I'st Sem R19",(){}),
+              syllabus("III'rd Year,I'st Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("III'rd Year,II'nd Sem R19",(){}),
+              syllabus("III'rd Year,II'nd Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("IV'th Year,I'st Sem R19",(){}),
+              syllabus("IV'th Year,I'st Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
-              syllabus("IV'th Year,II'nd Sem R19",(){}),
+              syllabus("IV'th Year,II'nd Sem R19",(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Pdfs(link: 'https://vnrvjiet.ac.in/assets/pdfs/stud1.pdf')));
+              }),
               SizedBox(height: 10.0,),
             ],
           ),
