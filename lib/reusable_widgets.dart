@@ -82,7 +82,19 @@ Container syllabus(String text,Function onTap){
     ),
   );
 }
-
+Container material(String text,Function onTap){
+  return Container(
+    color: Colors.amber,
+    width: 200.0,
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextButton(
+        onPressed: (){onTap();},
+        child: Text(text,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),),
+      ),
+    ),
+  );
+}
 Container YoutubeLinks(String text,String url,IconData icon){
 
   return Container(
