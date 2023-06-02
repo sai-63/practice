@@ -74,11 +74,11 @@ Container box(String text,IconData icon,Function onTap){
 
 Container syllabus(String text,Function onTap){
   return Container(
-    color: Colors.grey,
+    color: Colors.green,
     width: 200.0,
     child: TextButton(
       onPressed: (){onTap();},
-      child: Text(text,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),),
+      child: Text(text,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold,color:Colors.amber ),),
     ),
   );
 }

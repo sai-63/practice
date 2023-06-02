@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:practice/pages/chat-type.dart';
+import 'package:practice/pages/materials.dart';
+import 'package:practice/pages/notes_homepage.dart';
 import 'package:practice/reusable_widgets.dart';
 import 'package:practice/pages/syllabus-page.dart';
 import 'package:practice/pages/YoutubeLink.dart';
@@ -95,7 +97,7 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   width: 35.0,
                 ),
-                box('Notes', Icons.note_alt_sharp,(){}),
+                box('Notes', Icons.note_alt_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>NotesHomePage()));}),
                 const SizedBox(width: 35.0,),
                 box('Syllabus', Icons.assignment_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Syllabus()));})
               ],
@@ -110,7 +112,7 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   width: 35.0,
                 ),
-                box('Study Materials', Icons.menu_book,(){}),
+                box('Study Materials', Icons.menu_book,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>StudyMaterials()));}),
                 const SizedBox(width: 35.0,),
                 box('YouTube', Icons.play_circle_fill_rounded,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubeLink()));})
               ],
