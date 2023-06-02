@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:practice/pages/login_page.dart';
 import 'package:practice/reusable_widgets.dart';
@@ -12,6 +12,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final fs=FirebaseFirestore.instance;
+  final auth=FirebaseAuth.instance;
   TextEditingController _emailTextController=TextEditingController();
   TextEditingController _passwordTextController=TextEditingController();
   TextEditingController _textController=TextEditingController();
@@ -33,7 +35,11 @@ class _SignUpState extends State<SignUp> {
             reUsableTextField("Enter Password", Icons.person, true, _passwordTextController),
             SizedBox(height: 40.0,),
             loginSignUpButton(context, false, (){
-              FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextController.text, password: _passwordTextController.text).then((value){Navigator.push(context,MaterialPageRoute(builder: (context)=>Homes()));}).onError((error, stackTrace){});
+              FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailTextController.text, password: _passwordTextController.text).then((value){fs.collection('Users').add({
+                'username': _textController.text,
+                'email': _emailTextController!.text,
+                'password': _passwordTextController.text,
+              });Navigator.push(context,MaterialPageRoute(builder: (context)=>Homes()));}).onError((error, stackTrace){});
             } )
           ],
         ),

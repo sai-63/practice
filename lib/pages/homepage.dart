@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:practice/Logics/functions.dart';
 import 'package:practice/pages/chatpage.dart';
 import 'package:intl/intl.dart';
-import '../comps/styles.dart';
-import '../comps/widgets.dart';
+import 'package:practice/comps/styles.dart';
+import 'package:practice/comps/widgets.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -28,23 +28,24 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.indigo.shade400,
       appBar: AppBar(
         backgroundColor: Colors.indigo.shade400,
-        title: const Text('Flash Chat'),
+        title: const Text('My Chat'),
         elevation: 0,
         centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    open == true ? open = false : open = true;
-                  });
-                },
-                icon: Icon(
-                  open == true ? Icons.close_rounded : Icons.search_rounded,
-                  size: 30,
-                )),
-          )
+              onPressed: () {
+                setState(() {
+                  open == true ? open = false : open = true;
+                });
+              },
+              icon: Icon(
+                open == true ? Icons.close_rounded : Icons.search_rounded,
+                size: 30,
+              ),
+            ),
+          ),
         ],
       ),
       drawer: ChatWidgets.drawer(context),
@@ -66,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         const Spacer(),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
                           child: Text(
                             'Recent Users',
                             style: Styles.h1(),
@@ -77,37 +77,70 @@ class _MyHomePageState extends State<MyHomePage> {
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           height: 80,
                           child: StreamBuilder(
-                            stream:  firestore.collection('Rooms').snapshots(),
+                            stream: firestore.collection('Rooms').snapshots(),
                             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                              List data = !snapshot.hasData ? [] : snapshot.data!.docs.where((element) => element['users'].toString().contains(FirebaseAuth.instance.currentUser!.uid)).toList();
+                              if (!snapshot.hasData) {
+                                return Container();
+                              }
+
+                              final roomData = snapshot.data!.docs;
+                              List<QueryDocumentSnapshot> data = roomData
+                                  .where((element) =>
+                                  element['users']
+                                      .toString()
+                                      .contains(FirebaseAuth.instance.currentUser!.uid))
+                                  .toList();
+
                               return ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: data.length,
                                 itemBuilder: (context, i) {
                                   List users = data[i]['users'];
-                                  var friend = users.where((element) => element != FirebaseAuth.instance.currentUser!.uid);
-                                  var user = friend.isNotEmpty ? friend.first : users .where((element) => element == FirebaseAuth.instance .currentUser!.uid).first;
-                                  return  FutureBuilder(
+                                  var friend = users.where((element) => element !=
+                                      FirebaseAuth.instance.currentUser!.uid);
+                                  var user = friend.isNotEmpty
+                                      ? friend.first
+                                      : users.where((element) =>
+                                  element ==
+                                      FirebaseAuth.instance.currentUser!.uid).first;
+
+                                  return FutureBuilder(
                                     future: firestore.collection('Users').doc(user).get(),
                                     builder: (context, AsyncSnapshot snap) {
-                                      return !snap.hasData? Container(): ChatWidgets.circleProfile(onTap: (){
-                                        Navigator.of(context)
-                                            .push(
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return ChatPage(
-                                                id: user,
-                                                name: snap.data['name'],
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },name:  snap.data['name']);
-                                    }
+                                      if (!snap.hasData || !snap.data.exists) {
+                                        return Container();
+                                      }
+
+                                      final userData = snap.data.data();
+
+                                      if (userData == null) {
+                                        return Container();
+                                      }
+
+                                      final userName = userData.containsKey('name')
+                                          ? userData['name']
+                                          : '';
+
+                                      return ChatWidgets.circleProfile(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return ChatPage(
+                                                  id: user,
+                                                  name: userName,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        name: userName,
+                                      );
+                                    },
                                   );
                                 },
                               );
-                            }
+                            },
                           ),
                         ),
                       ],
@@ -132,45 +165,73 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            const EdgeInsets.symmetric(horizontal: 12.0),
                             child: StreamBuilder(
-                                stream:
-                                    firestore.collection('Rooms').snapshots(),
-                                builder: (context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  List data = !snapshot.hasData ? [] : snapshot.data!.docs.where((element) => element['users'].toString().contains(FirebaseAuth.instance.currentUser!.uid)).toList();
-                                  return ListView.builder(
-                                    itemCount: data.length,
-                                    itemBuilder: (context, i) {
-                                      List users = data[i]['users'];
-                                      var friend = users.where((element) => element != FirebaseAuth.instance.currentUser!.uid);
-                                      var user = friend.isNotEmpty ? friend.first : users .where((element) => element == FirebaseAuth.instance .currentUser!.uid).first;
-                                      return FutureBuilder(
-                                        future: firestore.collection('Users').doc(user).get(),
-                                        builder: (context,AsyncSnapshot snap) {
-                                          return !snap.hasData? Container(): ChatWidgets.card(
-                                            title: snap.data['name'],
-                                            subtitle:data[i]['last_message'],
-                                            time: DateFormat('hh:mm a').format(data[i]['last_message_time'].toDate()),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return ChatPage(
-                                                      id: user,
-                                                      name: snap.data['name'],
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          );
+                              stream: firestore.collection('Rooms').snapshots(),
+                              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                List data = !snapshot.hasData
+                                    ? []
+                                    : snapshot.data!.docs.where((element) =>
+                                    element['users']
+                                        .toString()
+                                        .contains(FirebaseAuth.instance.currentUser!.uid))
+                                    .toList();
+                                return ListView.builder(
+                                  itemCount: data.length,
+                                  itemBuilder: (context, i) {
+                                    List users = data[i]['users'];
+                                    var friend = users.where((element) =>
+                                    element != FirebaseAuth.instance.currentUser!.uid);
+                                    var user = friend.isNotEmpty
+                                        ? friend.first
+                                        : users.where((element) =>
+                                    element == FirebaseAuth.instance.currentUser!.uid).first;
+
+                                    return FutureBuilder(
+                                      future: firestore.collection('Users').doc(user).get(),
+                                      builder: (context, AsyncSnapshot snap) {
+                                        if (!snap.hasData || !snap.data.exists) {
+                                          return Container();
                                         }
-                                      );
-                                    },
-                                  );
-                                }),
+
+                                        final userData = snap.data.data();
+
+                                        if (userData == null) {
+                                          return Container();
+                                        }
+
+                                        final userName = userData['name'];
+
+                                        final lastMessage = data[i].data().containsKey('last_message')
+                                            ? data[i]['last_message']
+                                            : '';
+                                        final lastMessageTime = data[i].data().containsKey('last_message_time')
+                                            ? DateFormat('hh:mm a').format(data[i]['last_message_time'].toDate())
+                                            : '';
+
+                                        return ChatWidgets.card(
+                                          title: userName,
+                                          subtitle: lastMessage,
+                                          time: lastMessageTime,
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return ChatPage(
+                                                    id: user,
+                                                    name: userName,
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -179,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            ChatWidgets.searchBar(open)
+            ChatWidgets.searchBar(open),
           ],
         ),
       ),
