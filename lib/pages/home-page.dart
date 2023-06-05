@@ -9,6 +9,8 @@ import 'package:practice/pages/syllabus-page.dart';
 import 'package:practice/pages/YoutubeLink.dart';
 import 'package:practice/pages/dailyquiz.dart';
 import 'package:practice/pages/ai-chat.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:practice/main.dart';
 
 class Home extends StatefulWidget {
   String email;
@@ -21,6 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String email;
   _HomeState({required this.email});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +87,9 @@ class _HomeState extends State<Home> {
               contentPadding: EdgeInsets.only(left: 30.0),
               leading: Icon(Icons.logout_sharp),
               title: Text('LogOut',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
-              onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Homes()));},
+              onTap: ()async{
+                await _auth.signOut();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyApp()));},
             )
           ],
         ),

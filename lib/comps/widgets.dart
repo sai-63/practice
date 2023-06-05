@@ -6,6 +6,7 @@ import 'package:practice/comps/styles.dart';
 import 'package:practice/pages/login_page.dart';
 
 class ChatWidgets {
+  final FirebaseAuth _auth =FirebaseAuth.instance;
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -150,13 +151,6 @@ class ChatWidgets {
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
                   },
                 ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
-                  onTap: ()async{
-                    await Navigator.push(context, MaterialPageRoute(builder: (context)=>Homes()));
-                  }
-                )
               ],
             ),
           ),
@@ -183,4 +177,9 @@ class ChatWidgets {
       decoration: Styles.messageFieldCardStyle(),
     );
   }
+
+  Future<void> signOut() async {
+  _auth.signOut();
+  }
 }
+

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:practice/Logics/functions.dart';
+import 'package:practice/pages/App_Style.dart';
 import 'package:practice/pages/chatpage.dart';
 import 'package:intl/intl.dart';
 import 'package:practice/comps/styles.dart';
@@ -25,9 +26,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo.shade400,
+      backgroundColor: Colors.blue,
       appBar: AppBar(
-        backgroundColor: Colors.indigo.shade400,
+        backgroundColor: AppStyle.mainColor,
         title: const Text('My Chat'),
         elevation: 0,
         centerTitle: true,
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   margin: const EdgeInsets.all(0),
                   child: Container(
-                    color: Colors.indigo.shade400,
+                    color: Colors.blue,
                     padding: const EdgeInsets.all(8),
                     height: 160,
                     child: Column(
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
                           child: Text(
-                            'Recent Users',
+                            'Recent Chats',
                             style: Styles.h1(),
                           ),
                         ),
@@ -158,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 20),
                           child: Text(
-                            'Contacts',
+                            'Friends',
                             style: Styles.h1().copyWith(color: Colors.indigo),
                           ),
                         ),
