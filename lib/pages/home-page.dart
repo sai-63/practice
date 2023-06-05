@@ -94,56 +94,58 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[300]
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20.0,
-            ),
-            Container(child: Text("Let's Learn Together",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)),
-            const SizedBox(height: 40.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                box('Schedules', Icons.schedule,(){}),
-                const SizedBox(
-                  width: 35.0,
-                ),
-                box('Notes', Icons.note_alt_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>NotesHomePage()));}),
-                const SizedBox(width: 35.0,),
-                box('Syllabus', Icons.assignment_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Syllabus()));})
-              ],
-            ),
-            const SizedBox(
-              height: 50.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Chatype(email: email)));}),
-                const SizedBox(
-                  width: 35.0,
-                ),
-                box('Study Materials', Icons.menu_book,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>StudyMaterials()));}),
-                const SizedBox(width: 35.0,),
-                box('YouTube', Icons.play_circle_fill_rounded,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubeLink()));})
-              ],
-            ),
-            SizedBox(height: 70.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                box('Quiz', Icons.quiz_outlined,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Quiz()));}),
-                const SizedBox(
-                  width: 35.0,
-                ),
-                box('Ai-Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatGPTScreen()));}),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[300]
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(child: Text("Let's Learn Together",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)),
+              const SizedBox(height: 40.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  box('Schedules', Icons.schedule,(){}),
+                  const SizedBox(
+                    width: 35.0,
+                  ),
+                  box('Notes', Icons.note_alt_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>NotesHomePage()));}),
+                  const SizedBox(width: 35.0,),
+                  box('Syllabus', Icons.assignment_sharp,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Syllabus()));})
                 ],
-            ),
-          ],
+              ),
+              const SizedBox(
+                height: 50.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  box('Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Chatype(email: email)));}),
+                  const SizedBox(
+                    width: 35.0,
+                  ),
+                  box('Study Materials', Icons.menu_book,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>StudyMaterials()));}),
+                  const SizedBox(width: 35.0,),
+                  box('YouTube', Icons.play_circle_fill_rounded,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>YoutubeLink()));})
+                ],
+              ),
+              SizedBox(height: 70.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  box('Quiz', Icons.quiz_outlined,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>Quiz()));}),
+                  const SizedBox(
+                    width: 35.0,
+                  ),
+                  box('Ai-Chat', Icons.chat,(){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatGPTScreen()));}),
+                  ],
+              ),
+            ],
+          ),
         ),
       ),
     );
