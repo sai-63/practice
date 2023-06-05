@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:practice/pages/chat-type.dart';
+import 'package:practice/pages/login_page.dart';
 import 'package:practice/pages/materials.dart';
 import 'package:practice/pages/notes_homepage.dart';
 import 'package:practice/reusable_widgets.dart';
@@ -45,15 +46,22 @@ class _HomeState extends State<Home> {
                       children: [
                         CircleAvatar(
                           child: Icon(Icons.person),
-                          radius: 20.0,
+                          radius: 25.0,
                         ),
-                        SizedBox(width: 10.0,),
-                        Text('Welcome, ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white)),
-                        Text(email.replaceAll("@gmail.com", ""),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white),),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Text('Welcome, ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0,color: Colors.white)),
+                        Text(email.replaceAll("@gmail.com", ""),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0,color: Colors.white),),
                         // Text('Welcome, ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30.0,color: Colors.white)),
                       ],
                     ),
-                    SizedBox(height: 70.0,),
+                      ],
+                    ),
+                    SizedBox(height: 55.0,),
                     Row(
                       children: [
                         Icon(Icons.mail_rounded,color: Colors.grey,),
@@ -76,7 +84,7 @@ class _HomeState extends State<Home> {
               contentPadding: EdgeInsets.only(left: 30.0),
               leading: Icon(Icons.logout_sharp),
               title: Text('LogOut',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)),
-              onTap: (){Navigator.pushReplacementNamed(context, '/');},
+              onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Homes()));},
             )
           ],
         ),
@@ -88,8 +96,10 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             const SizedBox(
-              height: 50.0,
+              height: 20.0,
             ),
+            Container(child: Text("Let's Learn Together",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)),
+            const SizedBox(height: 40.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

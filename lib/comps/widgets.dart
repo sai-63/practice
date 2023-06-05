@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:practice/comps/animated-dialog.dart';
 import 'package:practice/comps/styles.dart';
+import 'package:practice/pages/login_page.dart';
 
 class ChatWidgets {
   static Widget card({title, time, subtitle, onTap}) {
@@ -152,7 +153,9 @@ class ChatWidgets {
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Logout'),
-                  onTap: ()async=>await FirebaseAuth.instance.signOut(),
+                  onTap: ()async{
+                    await Navigator.push(context, MaterialPageRoute(builder: (context)=>Homes()));
+                  }
                 )
               ],
             ),

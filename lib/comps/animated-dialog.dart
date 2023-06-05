@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:practice/comps/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:practice/pages/chatpage.dart';
+import '../pages/chatpage.dart';
 
 class AnimatedDialog extends StatefulWidget {
   final double height;
@@ -18,32 +17,63 @@ class AnimatedDialog extends StatefulWidget {
 
 class _AnimatedDialogState extends State<AnimatedDialog> {
   final firestore = FirebaseFirestore.instance;
-  final controller = TextEditingController();
-  String search = '';
-  bool show = false;
+  final TextEditingController searchController = TextEditingController();
+  StreamSubscription<QuerySnapshot>? usersSubscription;
+  List<DocumentSnapshot> users = [];
 
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     if (widget.height != 0) {
       Timer(const Duration(milliseconds: 200), () {
         if (mounted) {
           setState(() {
-            show = true;
+            usersSubscription = firestore
+                .collection('Users')
+                .orderBy('name') // Order the users by name
+                .snapshots()
+                .listen((QuerySnapshot snapshot) {
+              setState(() {
+                users = snapshot.docs;
+              });
+            });
           });
         }
       });
-    } else {
+    }
+  }
+
+  @override
+  void dispose() {
+    usersSubscription?.cancel();
+    super.dispose();
+  }
+
+  void _filterUsers(String searchText) {
+    if (searchText.isEmpty) {
       setState(() {
-        show = false;
+        users = [];
       });
+      return;
     }
 
+    firestore
+        .collection('Users')
+        .orderBy('name')
+        .where('name', isGreaterThanOrEqualTo: searchText)
+        .where('name', isLessThan: searchText + 'z')
+        .get()
+        .then((QuerySnapshot snapshot) {
+      setState(() {
+        users = snapshot.docs;
+      });
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.topEnd,
       children: [
@@ -63,54 +93,80 @@ class _AnimatedDialogState extends State<AnimatedDialog> {
           ),
           child: widget.width == 0
               ? null
-              : !show
-              ? null
               : Column(
-            children: [
-              ChatWidgets.searchField(
-                onChange: (a) {
-                  setState(() {
-                    search = a;
-                  });
-                },
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: StreamBuilder(
-                    stream: firestore.collection('Users').snapshots(),
-                    builder: (
-                        context,
-                        AsyncSnapshot<QuerySnapshot> snapshot,
-                        ) {
-                      List data = !snapshot.hasData
-                          ? []
-                          : snapshot.data!.docs
-                          .where((element) =>
-                      element['email']
-                          .toString()
-                          .contains(search) ||
-                          element['name']
-                              .toString()
-                              .contains(search))
-                          .toList();
-                      return ListView.builder(
-                        itemCount: data.length,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: searchController,
+                              onChanged: _filterUsers,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                hintText: 'Search users',
+                                hintStyle: TextStyle(color: Colors.white70),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              searchController.clear();
+                              _filterUsers('');
+                            },
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: users.length,
                         itemBuilder: (context, i) {
-                          Timestamp time = data[i]['date_time'];
-                          return ChatWidgets.card(
-                            title: data[i]['name'],
-                            time: DateFormat('EEE hh:mm')
-                                .format(time.toDate()),
+                          Timestamp time = users[i]['date_time'] as Timestamp;
+                          DateTime dateTime = time.toDate();
+                          return ListTile(
+                            title: Text(
+                              users[i]['name'] as String,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              DateFormat('EEE hh:mm').format(dateTime),
+                              style: TextStyle(color: Colors.white),
+                            ),
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return ChatPage(
-                                      id: data[i].id.toString(),
-                                      name: data[i]['name'],
+                                      id: users[i].id.toString(),
+                                      name: users[i]['name'] as String,
                                     );
                                   },
                                 ),
@@ -118,13 +174,10 @@ class _AnimatedDialogState extends State<AnimatedDialog> {
                             },
                           );
                         },
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ],
     );
