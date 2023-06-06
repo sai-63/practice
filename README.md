@@ -23,15 +23,19 @@ This repository contains a Flutter project that was developed by our team. The p
 
 # Installation
 1.Clone this repository to your local machine using the following command:
+
 => git clone https://github.com/sai-63/practice.git
 
 2.Change your working directory to the project folder:
+
 => cd practice
 
 3.Run the following command to fetch the dependencies:
+
 => flutter pub get
 
 4.Connect your physical device or emulator, and run the application using the following command:
+
 => flutter run
 
 # Dependencies
