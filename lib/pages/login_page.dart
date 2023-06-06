@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:practice/pages/home-page.dart';
+import 'package:practice/pages/signup-page.dart';
 
 class Homes extends StatefulWidget {
   @override
@@ -15,13 +16,13 @@ class _HomesState extends State<Homes> {
   final TextEditingController passwordController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height, // Set the container height to match the screen height
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [Colors.blue, Colors.deepPurple, Colors.purple]),
           ),
@@ -74,10 +75,9 @@ class _HomesState extends State<Homes> {
                             return "Email cannot be empty";
                           }
                           if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-                            return ("Please enter a valid email");
-                          } else {
-                            return null;
+                            return "Please enter a valid email";
                           }
+                          return null;
                         },
                         onSaved: (value) {
                           emailController.text = value!;
@@ -119,10 +119,9 @@ class _HomesState extends State<Homes> {
                             return "Password cannot be empty";
                           }
                           if (!regex.hasMatch(value)) {
-                            return ("Please enter a valid password (min. 6 characters)");
-                          } else {
-                            return null;
+                            return "Please enter a valid password (min. 6 characters)";
                           }
+                          return null;
                         },
                         onSaved: (value) {
                           passwordController.text = value!;
@@ -130,9 +129,11 @@ class _HomesState extends State<Homes> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          resetPassword(emailController.text);
+                        },
                         child: Text(
-                          "Forgot Password ....",
+                          "Forgot Password",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -173,7 +174,7 @@ class _HomesState extends State<Homes> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signup');
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
                             },
                             child: Text(
                               'SignUp',
@@ -220,6 +221,25 @@ class _HomesState extends State<Homes> {
           ),
         );
       }
+    }
+  }
+
+  void resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Password reset email sent. Please check your email."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to send password reset email. Please try again later."),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 }

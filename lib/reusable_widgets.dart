@@ -59,31 +59,35 @@ Container loginSignUpButton(BuildContext context,bool type,Function ontap){
 InkWell box(String text,IconData icon,Function onTap){
   return InkWell(
     onTap: (){onTap();},
-    child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: Colors.amber[200],
-                    ),
-                padding: EdgeInsets.only(left: 10.0,right: 10.0),
-                width: 100.0,
-                height: 120.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                        child: Icon(
-                          icon,
-                          size: 45.0,
-                        )
+    child: Wrap(
+      children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.amber[200],
                         ),
-                    SizedBox(height: 10.0,),
-                    Wrap(alignment: WrapAlignment.center, children: [
-                      Text(text,style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),)
-                    ]),
-                    SizedBox(height: 5.0,)
-                  ],
-                ),
-              ),
+                    padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                    width: 108.0,
+                    height: 120.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                            child: Icon(
+                              icon,
+                              size: 45.0,
+                            )
+                            ),
+                        SizedBox(height: 10.0,),
+                        Wrap(alignment: WrapAlignment.center, children: [
+                          Text(text,style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),)
+                        ]),
+                        SizedBox(height: 5.0,)
+                      ],
+                    ),
+                  ),
+                ],
+    ),
   );
 }
 
