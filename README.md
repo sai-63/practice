@@ -36,7 +36,7 @@ This repository contains a Flutter project that was developed by our team. The p
 
 # Dependencies
 
-dependencies:
+    dependencies:
 
     flutter:
       sdk: flutter
@@ -72,8 +72,8 @@ Submit a pull request to the main branch of this repository.
 If you have any questions or feedback regarding the project, please feel free to reach out to us:
 
 K.Sriram Charan - [ks3247651890@gmail.com]
-Nikhitha - [Email]
-Adithyanath - [Email]
+Sai Nikhitha - [sainikhitha695@gmail.com]
+K.Adityanath - [adityanathkurna17@gmail.com]
 
 We would love to hear from you and appreciate any suggestions or contributions you may have. Thank you for using our application!
 
