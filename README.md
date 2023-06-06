@@ -4,6 +4,7 @@
 This repository contains a Flutter project that was developed by our team. The project aims to help a group of friends study together provided with some basic features to help them and make learning fun. Throughout the development process, our team collaborated and utilized their expertise to create a robust and user-friendly application.
 
 # Features
+
 1.Notes
 
 2.Chat[Rooms and Personalised]
