@@ -37,19 +37,18 @@ This repository contains a Flutter project that was developed by our team. The p
 # Dependencies
 
     dependencies:
-
-    flutter:
-      sdk: flutter
-    firebase_core: ^2.13.0
-    firebase_auth: ^4.6.1
-    flutterfire_ui: ^0.4.3+20
-    cloud_firestore: ^4.7.1
-    connectivity: ^3.0.6
-    shared_preferences: ^2.1.1
-    flutter_secure_storage: ^8.0.0
-    url_launcher: ^6.1.11
-    http: ^0.13.5
-    google_fonts: ^4.0.0
+      flutter:
+        sdk: flutter
+      firebase_core: ^2.13.0
+      firebase_auth: ^4.6.1
+      flutterfire_ui: ^0.4.3+20
+      cloud_firestore: ^4.7.1
+      connectivity: ^3.0.6
+      shared_preferences: ^2.1.1
+      flutter_secure_storage: ^8.0.0
+      url_launcher: ^6.1.11
+      http: ^0.13.5
+      google_fonts: ^4.0.0
   
   
  ***add this in your dependencies section in pubspec.yaml.
