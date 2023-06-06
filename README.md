@@ -5,13 +5,21 @@ This repository contains a Flutter project that was developed by our team. The p
 
 # Features
 1.Notes
+
 2.Chat[Rooms and Personalised]
+
 3.Syllabus
+
 4.Study Materials
+
 5.YouTube links
+
 6.Quiz
+
 7.Ai-Chat
+
 8.Schedules(implementing)
+
 
 # Installation
 1.Clone this repository to your local machine using the following command:
