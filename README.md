@@ -83,8 +83,8 @@ We would love to hear from you and appreciate any suggestions or contributions y
 
 Make sure to add these two lines in your AndroidManifest.xml file:
 
-1.<uses-permission android:name="android.permission.INTERNET"/>
-2.<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+1.'<uses-permission android:name="android.permission.INTERNET"/>'
+2.'<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>'
 
 this will helps your app to access internet.
 
